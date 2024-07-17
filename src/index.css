@@ -61,22 +61,33 @@ body {
 .profile-cart {
   display: flex;
   gap: 1rem;
+  
+  height: auto;
 }
 
 .profile-button,
 .cart-button {
-  background-color:black;
+  
+  background-color:lightseagreen;
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
+  border-radius: 50%;
+  max-width: 100%;
 }
+
+.icon {
+  width: 50px;
+  height: 50px;
+}
+  
 
 .profile-button:hover,
 .cart-button:hover {
-  background-color: #555;
+  background-color: lightseagreen;
 }
 
 .icon {
@@ -105,57 +116,60 @@ body {
 
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 0.8rem;
+  flex-wrap: wrap;
+  max-height: 100%;
 }
 
 .product-card {
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid #ddd;
+  background-color: palegoldenrod;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  text-align: center;
-  background-color: #fff;
-  height: 92%; 
+  
 }
 
 .product-image {
   max-width: 100%;
   height: auto;
+  border-radius: 10px;
   margin-bottom: 1rem;
 }
 
 .product-card h2 {
-  margin: 0;
   font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
 }
 
 .product-card p {
-  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #555;
 }
 
-.products button {
-  width: 150px;
-  background-color: white;
-  color: black;
-  
-}
-
-.add-to-cart {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: white;
-  color: #fff;
-  border: 1px solid black;
+.add-to-cart { 
+  display: block;
+  margin-top: auto;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+ 
 }
 
 .add-to-cart:hover {
-  background-color: #218838;
+  background-color: orange;
 }
+
 
 .cart-container {
   padding: 2rem;
@@ -252,13 +266,15 @@ body {
 }
 
 .contact-us-container {
-  font-family: var(--font);
-  background-color: var(--primary-light-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
+font-family: var(--font);
+    background-color: var(--primary-light-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
 }
 
 .contact-us {
@@ -269,6 +285,8 @@ body {
   max-width: 600px;
   padding: 1.75rem;
 }
+
+
 
 .title {
   font-size: 2rem;
@@ -318,6 +336,24 @@ body {
   padding: .75rem;
   cursor: pointer;
 }
+
+.form-group:nth-child(1) {
+  margin-right: 1.5rem; 
+}
+
+.form-group:nth-child(2) {
+  margin-right: 1rem; 
+}
+
+
+.form-group:nth-child(3) {
+  margin-right: 1rem; 
+}
+
+.form-group:nth-child(7) {
+  margin-right: 1rem; 
+}
+
 
 .contact-us-form .radio-button input,
 .contact-us-form .checkbox input {
