@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaFontAwesome } from 'react-icons/fa';
 
+
+
 const Navbar = () => {
   return (
     <div>

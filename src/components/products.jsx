@@ -1,9 +1,12 @@
-// src/components/Products.jsx
+
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,7 +31,11 @@ const Products = () => {
   return (
     <section className="products">
       {products.map((product) => (
-        <div key={product.id} className="product-card">
+        <div
+          key={product.id}
+          className="product-card"
+          onClick={() => navigate(`/products/${product.id}`)}
+        >
           <img src={product.image} alt={product.title} className="product-image" />
           <h2>{product.title}</h2>
           <p>${product.price}</p>
