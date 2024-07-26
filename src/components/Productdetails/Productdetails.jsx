@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const [products, setProducts] = useState([]);
+  const [otherProducts, setOtherProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,18 +20,18 @@ const ProductDetails = () => {
       }
     };
 
-    const fetchProducts = async () => {
+    const fetchOtherProducts = async () => {
       try {
         const response = await fetch('https://fakestoreapi.com/products');
         const data = await response.json();
-        setProducts(data);
+        setOtherProducts(data.filter(p => p.id !== parseInt(productId)));
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
 
     fetchProduct();
-    fetchProducts();
+    fetchOtherProducts();
   }, [productId]);
 
   if (loading) {
@@ -55,17 +55,18 @@ const ProductDetails = () => {
           <button className="add-to-cart">Add to Cart</button>
         </div>
       </div>
-      <h2>Other Products</h2>
-      <div className="other-products">
-        {products.filter(p => p.id !== product.id).map((product) => (
-          <div key={product.id} className="product-card">
-            <Link to={`/product/${product.id}`}>
-              <img src={product.image} alt={product.title} className="product-image" />
-              <h3 className="product-title">{product.title}</h3>
-              <p className="product-price">${product.price}</p>
-            </Link>
-          </div>
-        ))}
+      <div className="other-products-section">
+        <h2>Other Products</h2>
+        <div className="other-products">
+          {otherProducts.map(otherProduct => (
+            <div key={otherProduct.id} className="other-product-card">
+              <img src={otherProduct.image} alt={otherProduct.title} className="other-product-image" />
+              <h2 className="other-product-h2">{otherProduct.title}</h2>
+              <p>${otherProduct.price}</p>
+              <button className="other-product-add-to-cart">Add to Cart</button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

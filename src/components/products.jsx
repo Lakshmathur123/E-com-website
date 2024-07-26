@@ -1,12 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,16 +28,14 @@ const Products = () => {
   return (
     <section className="products">
       {products.map((product) => (
-        <div
-          key={product.id}
-          className="product-card"
-          onClick={() => navigate(`/products/${product.id}`)}
-        >
-          <img src={product.image} alt={product.title} className="product-image" />
-          <h2>{product.title}</h2>
-          <p>${product.price}</p>
-          <button className="add-to-cart">Add to Cart</button>
-        </div>
+        <Link to={`/product/${product.id}`} key={product.id} className="product-link">
+          <div className="product-card">
+            <img src={product.image} alt={product.title} className="product-image" />
+            <h2>{product.title}</h2>
+            <p>${product.price}</p>
+            <button className="add-to-cart">Add to Cart</button>
+          </div>
+        </Link>
       ))}
     </section>
   );
