@@ -23,7 +23,7 @@ const Navbar = () => {
       </nav>
       <ul className="nav-links">
         <li><a href="\">Home</a></li>
-        <li><Link to="/categories">Categories</Link></li>
+        <li><Link to="/cateogries">Cateogries</Link></li>
         <li><Link to="/contact">Contact Us</Link></li>
         <li><a href="\">About Us</a></li>
       </ul>
