@@ -15,6 +15,10 @@ body {
   color: black;
 }
 
+a {
+  text-decoration: none;
+}
+
 .logo-container {
   display: flex;
   align-items: center;
@@ -124,7 +128,7 @@ body {
 }
 
 .product-card {
-  display: inline-block;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: palegoldenrod;
@@ -136,12 +140,12 @@ body {
 
 .product-image {
   
-  height: 260px;
-  width: 200px;
+  height: 230px;
+  width: 190px;
   object-fit: contain;
   background: #fff;
   border-radius: 10px;
-  margin-bottom: 1rem;
+ padding: 5px;
 }
 
 .product-card h2 {
@@ -179,6 +183,9 @@ body {
 .add-to-cart:hover {
   background-color: orange;
 }
+
+
+
 
 
 .cart-container {
@@ -282,9 +289,9 @@ font-family: var(--font);
     display: flex;
     justify-content: center;
     align-items: center;
-   height: 95vh;
+    min-height: calc(100vh - 70px); 
     margin: 0;
-    padding: 0;
+    padding: 2rem 0; 
     font-size: 16px;
 }
 
@@ -598,61 +605,87 @@ font-family: var(--font);
   color: #333;
 }
 
-.login-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-.login-container h1 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
-.form-group {
-  margin-bottom: 1rem;
+/* src/styles.css */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input {
+form {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  max-width: 300px;
 }
 
-.error {
-  color: red;
-  margin-bottom: 1rem;
+form h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.success {
-  color: green;
-  margin-bottom: 1rem;
+form div {
+  margin-bottom: 15px;
 }
 
-.login-button {
+form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+form input {
   width: 100%;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  padding: 10px;
   background-color: #007bff;
-  color: #fff;
-  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
+  font-weight: bold;
 }
 
-.login-button:hover {
+form button:hover {
   background-color: #0056b3;
 }
 
-
+.modal-content p {
+  text-align: center;
+  color: red;
+  margin-top: 10px;
+}
 
