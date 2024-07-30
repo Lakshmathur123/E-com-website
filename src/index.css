@@ -6,7 +6,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Navbar Styles */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -50,15 +50,53 @@ body {
   text-decoration: underline;
 }
 
-.search-bar {
-  padding: 0.5rem;
-  flex: 1;
-  margin: 0 1rem;
+
+/* Add this to your existing CSS file */
+
+/* Container for the search bar to ensure proper alignment and spacing */
+.search-bar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1; /* This allows the search bar to take available space */
+  max-width: 600px; /* You can adjust this value as needed */
+  margin: 0 1rem; /* Add margin to separate from other elements */
 }
+
+.search-bar {
+  padding: 0.5rem 2.5rem 0.5rem 0.5rem; /* Adjust padding to ensure icon space */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Full width to take up available space */
+  font-size: 1rem;
+}
+
+.search-icon {
+  position: absolute;
+  right: 0.5rem;
+  color: #999;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .search-bar-container {
+    max-width: none; 
+    flex: 1; 
+  }
+
+  .search-bar {
+    width: 100%; 
+  }
+
+  }
+
+
+
 
 .profile-cart {
   display: flex;
-  gap: 1rem;
+  gap: 0.4rem;
   height: auto;
 }
 
@@ -116,8 +154,9 @@ body {
   }
 
   .nav-links {
-    flex-direction: column;
-    align-items: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
     padding: 1rem 0;
   }
@@ -175,7 +214,6 @@ body {
 .product-image {
   
   height: 230px;
-  width: 190px;
   object-fit: contain;
   background: #fff;
   border-radius: 10px;
@@ -320,22 +358,24 @@ body {
 }
 
 .contact-us-container {
-font-family: var(--font);
+    font-family: var(--font);
     background-color: var(--primary-light-color);
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: calc(100vh - 70px); 
-    margin: 0;
+    padding: 0;
     padding: 2rem 0; 
     font-size: 16px;
     width: 100%;
-   
 }
 
+
 .contact-us {
-  background-color: var(--primary-light-color);
+  background-color: var(--white-color);
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: 95%;
   max-width: 600px;
   padding: 1.75rem;
 }
@@ -352,6 +392,7 @@ font-family: var(--font);
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   padding-top: 1rem;
+  max-width: 600px;
 }
 
 .contact-us-form label {
@@ -450,8 +491,7 @@ font-family: var(--font);
 
 .contact-us-form button:hover {
   background-color: hsl(169, 82%, 20%);
-}
-
+} 
 .product-details-page {
   padding: 2rem;
   max-width: 1200px;
@@ -604,37 +644,6 @@ font-family: var(--font);
 }
 
 
-.categories-page {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.categories-page h1 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
-
-.categories-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.category-link {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  text-decoration: none;
-  color: #333;
-  transition: background-color 0.3s;
-}
-
-.category-link:hover {
-  background-color: orange;
-  color: #fff;
-}
 
 .icon {
   font-size: 1.5rem;
@@ -728,3 +737,47 @@ form button:hover {
 a {
   text-decoration: none;
 }
+
+.categories-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.categories-container h2 {
+  font-size: 2.3rem;
+  text-decoration: underline;
+}
+
+.categories-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.categories-list li {
+  margin: 0;
+}
+
+.category-link {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem 1rem;
+  background-color: cyan;
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-size: 1.3rem;
+}
+
+.category-link:hover {
+  background-color: blue;
+}
+

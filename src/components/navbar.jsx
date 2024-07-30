@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
 import ProfileModal from './ProfileModal';
 
 const Navbar = () => {
@@ -22,7 +22,10 @@ const Navbar = () => {
           <img src="./logo-laksh.png" alt="logo" className="logo-image" />
           <span className="logo-text">Laksh's Shop</span>
         </div>
-        <input type="text" placeholder="Search..." className="search-bar" />
+        <div className="search-bar-container">
+          <input type="text" placeholder="Search Any Product" className="search-bar" />
+          <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        </div>
         <div className="profile-cart">
           <button onClick={openModal} className="profile-button">
             <FontAwesomeIcon icon={faUser} className="icon" />
@@ -33,10 +36,10 @@ const Navbar = () => {
         </div>
       </nav>
       <ul className="nav-links">
-        <li><a href="\">Home</a></li>
+        <li><Link to="/">Home</Link></li>
         <li><Link to="/categories">Categories</Link></li>
         <li><Link to="/contact">Contact Us</Link></li>
-        <li><a href="\">About Us</a></li>
+        <li><Link to="/about">About Us</Link></li>
       </ul>
       <ProfileModal isOpen={modalIsOpen} onRequestClose={closeModal} />
     </div>

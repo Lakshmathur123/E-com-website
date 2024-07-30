@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const CategoryPage = () => {
+const CategoryItems = () => {
   const { categoryName } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
       try {
         const response = await fetch(`https://fakestoreapi.com/products/category/${categoryName}`);
         const data = await response.json();
@@ -33,11 +32,7 @@ const CategoryPage = () => {
       <h1>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</h1>
       <section className="products">
         {products.map((product) => (
-          <Link
-            to={`/product/${product.title}?id=${product.id}`}
-            key={product.id}
-            className="product-link"
-          >
+          <Link to={`/product/${product.id}`} key={product.id} className="product-link">
             <div className="product-card">
               <img src={product.image} alt={product.title} className="product-image" />
               <h2>{product.title}</h2>
@@ -51,4 +46,5 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage;
+export default CategoryItems;
+
