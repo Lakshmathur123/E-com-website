@@ -14,15 +14,14 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
     setError(null);
 
     try {
-      // Authenticate user
       const loginResponse = await fetch('https://fakestoreapi.com/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
+          username,
+          password,
         }),
       });
 
@@ -31,7 +30,6 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
         throw new Error(loginData.message || 'Authentication failed');
       }
 
-      // Fetch profile data using the token received
       const profileResponse = await fetch('https://fakestoreapi.com/users/1', {
         method: 'GET',
         headers: {
@@ -53,32 +51,41 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Profile Modal" className="modal" overlayClassName="overlay">
-      <div className="modal-content">
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      contentLabel="Profile Modal"
+      className="profile-modal"
+      overlayClassName="profile-overlay"
+    >
+      <div className="profile-modal-content">
+        <button className="profile-close-button" onClick={onRequestClose}>X</button>
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
         {!loading && !profileData && (
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} className="profile-form">
             <h2>Login</h2>
-            <div>
-              <label>Username:</label>
+            <div className="profile-form-group">
+              <label className="profile-form-label">Username:</label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
+                className="profile-form-input"
               />
             </div>
-            <div>
-              <label>Password:</label>
+            <div className="profile-form-group">
+              <label className="profile-form-label">Password:</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="profile-form-input"
               />
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" className="profile-form-button">Login</button>
           </form>
         )}
         {profileData && (

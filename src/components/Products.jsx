@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -19,29 +20,43 @@ const Products = () => {
     };
 
     fetchProducts();
-  }, []); // Ensure dependencies array is correct to avoid re-fetching on every render
+  }, []);
 
   if (loading) {
     return <p>Loading products...</p>;
   }
 
+  const handleCardClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
+  const handleAddToCartClick = (event, product) => {
+    event.stopPropagation();
+    // Add your add to cart logic here
+    console.log(`Added product ${product.title} to cart.`);
+  };
+
   return (
     <section className="products">
       {products.map((product) => (
-        <Link to={`/product/${product.id}`} key={product.id} className="product-link">
-          <div className="product-card">
-            <img src={product.image} alt={product.title} className="product-image" />
-            <h2>{product.title}</h2>
-            <p>${product.price.toFixed(2)}</p> {/* Format price to 2 decimal places */}
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </Link>
+        <div 
+          key={product.id} 
+          className="product-card" 
+          onClick={() => handleCardClick(product.id)}
+        >
+          <img src={product.image} alt={product.title} className="product-image" />
+          <h2>{product.title}</h2>
+          <p>${product.price.toFixed(2)}</p>
+          <button 
+            className="add-to-cart" 
+            onClick={(event) => handleAddToCartClick(event, product)}
+          >
+            Add to Cart
+          </button>
+        </div>
       ))}
     </section>
   );
 };
-
-
-
 
 export default Products;

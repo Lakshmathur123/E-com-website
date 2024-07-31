@@ -7,6 +7,8 @@ import ContactUs from './components/ContactUs/ContactUs';
 import ProductDetails from './components/Productdetails/Productdetails';
 import Categories from './components/Category/Categories';
 import CategoryItems from './components/Category/CategoryItems';
+import AboutUs from './components/AboutUs/AboutUs';
+
 
 export default function App() {
   return (
@@ -19,6 +21,7 @@ export default function App() {
         <Route path="/product/:productId" element={<ProductDetails />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/category/:categoryName" element={<CategoryItems />} />
+        <Route path='/about' element={<AboutUs />} />
       </Routes>
     </Router>
   );

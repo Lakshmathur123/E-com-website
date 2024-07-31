@@ -1,3 +1,4 @@
+// components/Navbar.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,8 +20,12 @@ const Navbar = () => {
     <div>
       <nav className="navbar">
         <div className="logo-container">
-          <img src="./logo-laksh.png" alt="logo" className="logo-image" />
-          <span className="logo-text">Laksh's Shop</span>
+          <Link to="/">
+            <img src="./logo-laksh.png" alt="logo" className="logo-image" />
+          </Link>
+          <Link to="/" className="logo-text">
+            Laksh's Shop
+          </Link>
         </div>
         <div className="search-bar-container">
           <input type="text" placeholder="Search Any Product" className="search-bar" />
@@ -45,7 +50,5 @@ const Navbar = () => {
     </div>
   );
 };
-
-
 
 export default Navbar;
