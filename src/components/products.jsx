@@ -19,7 +19,7 @@ const Products = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, []); // Ensure dependencies array is correct to avoid re-fetching on every render
 
   if (loading) {
     return <p>Loading products...</p>;
@@ -32,7 +32,7 @@ const Products = () => {
           <div className="product-card">
             <img src={product.image} alt={product.title} className="product-image" />
             <h2>{product.title}</h2>
-            <p>${product.price}</p>
+            <p>${product.price.toFixed(2)}</p> {/* Format price to 2 decimal places */}
             <button className="add-to-cart">Add to Cart</button>
           </div>
         </Link>
