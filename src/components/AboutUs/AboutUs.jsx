@@ -6,7 +6,7 @@ const AboutUs = () => {
       <h1>About Us</h1>
       <div className="about-us-content">
         <div className="about-us-image">
-          <img src="/src/components/images/team..png" alt="Our Team" />
+          <img src="/public/team..png" alt="Our Team" />
         </div>
         <div className="about-us-text">
           <p>
