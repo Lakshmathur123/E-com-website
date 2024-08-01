@@ -61,7 +61,7 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
         <button className="profile-close-button" onClick={onRequestClose}>X</button>
         <div className="profile-modal-inner">
           <div className="profile-image">
-            <img src="./public/modal-login.jpg" alt="Login Illustration" />
+            <img src="/public/modal-login.jpg" alt="Login Illustration" />
           </div>
           <div className="profile-form-container">
             <h2>Welcome to Laksh's Shop</h2>
