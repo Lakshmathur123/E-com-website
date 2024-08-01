@@ -6,7 +6,7 @@ const ContactUs = () => {
       <div className="contact-us">
         <h1 className="title">Contact Us</h1>
         <form className="contact-us-form">
-          <div className="contact-form-group">
+          <div className="form-group">
             <label htmlFor="firstName">First Name*</label>
             <input type="text" id="firstName" name="firstName" required />
           </div>
