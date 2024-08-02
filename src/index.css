@@ -11,7 +11,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2.5rem;
+  padding: 1.8rem;
   background-color: lightseagreen;
   color: black;
 }
@@ -33,13 +33,17 @@ body {
   color: #333;
 }
 
+.logo-container:hover {
+  border: 1px solid black;
+}
+
 .nav-links {
   list-style: none;
   display: flex;
   justify-content: center;
   gap: 2.5rem;
   background-color: white;
-  padding: 0.3rem;
+  padding: 0.1rem;
 }
 
 .nav-links li a {
@@ -893,6 +897,10 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
+}
+
+.profile-form label {
+  color: white;
 }
 
 .profile-form-input::placeholder {

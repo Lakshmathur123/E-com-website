@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -22,39 +22,40 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
-
   const handleCardClick = (productId) => {
     navigate(`/product/${productId}`);
   };
 
   const handleAddToCartClick = (event, product) => {
     event.stopPropagation();
-    // Add your add to cart logic here
     console.log(`Added product ${product.title} to cart.`);
   };
 
+  if (loading) {
+    return <p>Loading products...</p>;
+  }
+
+  const renderProductCard = (product) => (
+    <div 
+      key={product.id} 
+      className="product-card" 
+      onClick={() => handleCardClick(product.id)}
+    >
+      <img src={product.image} alt={product.title} className="product-image" />
+      <h2>{product.title}</h2>
+      <p>${product.price.toFixed(2)}</p>
+      <button 
+        className="add-to-cart" 
+        onClick={(event) => handleAddToCartClick(event, product)}
+      >
+        Add to Cart
+      </button>
+    </div>
+  );
+
   return (
     <section className="products">
-      {products.map((product) => (
-        <div 
-          key={product.id} 
-          className="product-card" 
-          onClick={() => handleCardClick(product.id)}
-        >
-          <img src={product.image} alt={product.title} className="product-image" />
-          <h2>{product.title}</h2>
-          <p>${product.price.toFixed(2)}</p>
-          <button 
-            className="add-to-cart" 
-            onClick={(event) => handleAddToCartClick(event, product)}
-          >
-            Add to Cart
-          </button>
-        </div>
-      ))}
+      {products.map(renderProductCard)}
     </section>
   );
 };

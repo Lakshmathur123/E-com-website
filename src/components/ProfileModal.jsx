@@ -23,11 +23,13 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
       });
 
       const loginData = await loginResponse.json();
+      console.log('Login Data:', loginData);
       if (!loginResponse.ok) {
         throw new Error(loginData.message || 'Authentication failed');
       }
 
       localStorage.setItem('token', loginData.token);
+      console.log('Token stored in localStorage:', localStorage.getItem('token'));
 
       const profileResponse = await fetch('https://fakestoreapi.com/users/1', {
         method: 'GET',
@@ -37,6 +39,7 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
       });
 
       const profileData = await profileResponse.json();
+      console.log('Profile Data:', profileData);
       if (!profileResponse.ok) {
         throw new Error(profileData.message || 'Failed to fetch profile data');
       }

@@ -34,6 +34,32 @@ const ProductDetails = () => {
     fetchOtherProducts();
   }, [productId]);
 
+  const handleAddToCart = (product) => {
+    console.log(`Added product ${product.title} to cart.`);
+  };
+
+  const renderProductCard = (product) => (
+    <div 
+      key={product.id} 
+      className="product-card" 
+      onClick={() => handleCardClick(product.id)}
+    >
+      <img src={product.image} alt={product.title} className="product-image" />
+      <h2>{product.title}</h2>
+      <p>${product.price.toFixed(2)}</p>
+      <button 
+        className="add-to-cart" 
+        onClick={(event) => handleAddToCartClick(event, product)}
+      >
+        Add to Cart
+      </button>
+    </div>
+  );
+
+  const handleCardClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
   if (loading) {
     return <p>Loading product...</p>;
   }
@@ -58,14 +84,7 @@ const ProductDetails = () => {
       <div className="other-products-section">
         <h2>Other Products</h2>
         <div className="other-products">
-          {otherProducts.map(otherProduct => (
-            <div key={otherProduct.id} className="other-product-card">
-              <img src={otherProduct.image} alt={otherProduct.title} className="other-product-image" />
-              <h2 className="other-product-h2">{otherProduct.title}</h2>
-              <p>${otherProduct.price}</p>
-              <button className="other-product-add-to-cart">Add to Cart</button>
-            </div>
-          ))}
+          {otherProducts.map(renderProductCard)}
         </div>
       </div>
     </div>
