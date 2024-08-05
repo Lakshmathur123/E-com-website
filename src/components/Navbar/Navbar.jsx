@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
-import ProfileModal from './ProfileModal';
+import ProfileModal from '../ProfileModal/ProfileModal';
 
 const Navbar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -40,6 +40,7 @@ const Navbar = () => {
           </Link>
         </div>
       </nav>
+      <div className='nav-container'>
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/categories">Categories</Link></li>
@@ -47,6 +48,7 @@ const Navbar = () => {
         <li><Link to="/about">About Us</Link></li>
       </ul>
       <ProfileModal isOpen={modalIsOpen} onRequestClose={closeModal} />
+    </div>
     </div>
   );
 };

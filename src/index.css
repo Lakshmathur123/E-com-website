@@ -37,13 +37,22 @@ body {
   border: 1px solid black;
 }
 
+
+.nav-container {
+  width: 100%;
+  background-color: #A7E3E5; 
+  padding: 1rem 0;
+  border-bottom: 1px solid black;
+}
+
 .nav-links {
   list-style: none;
   display: flex;
   justify-content: center;
   gap: 2.5rem;
-  background-color: white;
+  background-color: #A7E3E5;
   padding: 0.1rem;
+  margin-bottom: 0;
 }
 
 .nav-links li a {
@@ -129,7 +138,7 @@ body {
   text-align: center;
   padding: 10rem;
   background-color: #f8f9fa;
-  background-image: url(./components/images/ben-white-4K2lIP0zc_k-unsplash.jpg);
+  background-image: url(./assests/images/ben-white-4K2lIP0zc_k-unsplash.jpg);
   background-size: cover;
 }
 
@@ -529,15 +538,15 @@ body {
 }
 
 .product-info-section h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
 .product-details-description {
-  font-size: 1.5rem;
-  color: darkslateblue;
+  font-size: 1rem;
+  color: lightslategrey;
   margin-bottom: 1rem;
-  font-style: bold;
+  font-style: italic;
 }
 
 .product-details-price {
@@ -632,50 +641,6 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-}
-
-.other-product-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: palegoldenrod;
-}
-
-.other-product-image {
-  width: 180px;
-  height: 260px;
-}
-
-.other-product-h2 {
-  font-size: 1rem;
-  margin: 10px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #333;
-}
-
-.other-product-card p {
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.other-product-add-to-cart {
-  margin-top: auto;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.other-product-add-to-cart:hover {
-  background-color: orange;
 }
 
 

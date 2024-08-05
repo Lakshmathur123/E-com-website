@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ProductCard from '../components/ProductCart/ProductCart';
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -38,28 +39,6 @@ const ProductDetails = () => {
     console.log(`Added product ${product.title} to cart.`);
   };
 
-  const renderProductCard = (product) => (
-    <div 
-      key={product.id} 
-      className="product-card" 
-      onClick={() => handleCardClick(product.id)}
-    >
-      <img src={product.image} alt={product.title} className="product-image" />
-      <h2>{product.title}</h2>
-      <p>${product.price.toFixed(2)}</p>
-      <button 
-        className="add-to-cart" 
-        onClick={(event) => handleAddToCartClick(event, product)}
-      >
-        Add to Cart
-      </button>
-    </div>
-  );
-
-  const handleCardClick = (productId) => {
-    navigate(`/product/${productId}`);
-  };
-
   if (loading) {
     return <p>Loading product...</p>;
   }
@@ -84,7 +63,13 @@ const ProductDetails = () => {
       <div className="other-products-section">
         <h2>Other Products</h2>
         <div className="other-products">
-          {otherProducts.map(renderProductCard)}
+          {otherProducts.map(otherProduct => (
+            <ProductCard 
+              key={otherProduct.id} 
+              product={otherProduct}
+              onAddToCart={handleAddToCart}
+            />
+          ))}
         </div>
       </div>
     </div>
