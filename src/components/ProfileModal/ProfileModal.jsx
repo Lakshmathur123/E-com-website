@@ -7,6 +7,7 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
   const [profileData, setProfileData] = useState(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,8 +29,14 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
         throw new Error(loginData.message || 'Authentication failed');
       }
 
-      localStorage.setItem('token', loginData.token);
-      console.log('Token stored in localStorage:', localStorage.getItem('token'));
+      if (rememberMe) {
+        localStorage.setItem('token', loginData.token);
+        sessionStorage.removeItem('token');
+      } else {
+        sessionStorage.setItem('token', loginData.token);
+        localStorage.removeItem('token');
+      }
+      console.log('Token stored in:', rememberMe ? 'localStorage' : 'sessionStorage');
 
       const profileResponse = await fetch('https://fakestoreapi.com/users/1', {
         method: 'GET',
@@ -88,6 +95,16 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
                   required
                   className="profile-form-input"
                 />
+              </div>
+              <div className="profile-form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  Remember Me
+                </label>
               </div>
               <div className="forgot-password">
                 <a href="/forgot-password">Forgot password?</a>
