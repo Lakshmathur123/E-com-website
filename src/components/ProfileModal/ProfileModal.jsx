@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
 const ProfileModal = ({ isOpen, onRequestClose }) => {
@@ -15,49 +15,53 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
     setError(null);
 
     try {
-      const loginResponse = await fetch('https://fakestoreapi.com/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const usersResponse = await fetch('https://fakestoreapi.com/users');
+      const users = await usersResponse.json();
+      const user = users.find(user => user.username === username && user.password === password);
 
-      const loginData = await loginResponse.json();
-      console.log('Login Data:', loginData);
-      if (!loginResponse.ok) {
-        throw new Error(loginData.message || 'Authentication failed');
+      if (!user) {
+        throw new Error('Authentication failed');
       }
+
+      const userData = {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        name: `${user.name.firstname} ${user.name.lastname}`,
+        phone: user.phone
+      };
 
       if (rememberMe) {
-        localStorage.setItem('token', loginData.token);
-        sessionStorage.removeItem('token');
+        localStorage.setItem('userData', JSON.stringify(userData));
+        sessionStorage.removeItem('userData');
       } else {
-        sessionStorage.setItem('token', loginData.token);
-        localStorage.removeItem('token');
+        sessionStorage.setItem('userData', JSON.stringify(userData));
+        localStorage.removeItem('userData');
       }
-      console.log('Token stored in:', rememberMe ? 'localStorage' : 'sessionStorage');
+      console.log('User data stored in:', rememberMe ? 'localStorage' : 'sessionStorage');
 
-      const profileResponse = await fetch('https://fakestoreapi.com/users/1', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${loginData.token}`,
-        },
-      });
-
-      const profileData = await profileResponse.json();
-      console.log('Profile Data:', profileData);
-      if (!profileResponse.ok) {
-        throw new Error(profileData.message || 'Failed to fetch profile data');
-      }
-
-      setProfileData(profileData);
+      setProfileData(userData);
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
     }
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userData');
+    sessionStorage.removeItem('userData');
+    setProfileData(null);
+    setUsername('');
+    setPassword('');
+  };
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+    if (storedUserData) {
+      setProfileData(JSON.parse(storedUserData));
+    }
+  }, []);
 
   return (
     <Modal
@@ -70,8 +74,6 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
       <div className="profile-modal-content">
         <button className="profile-close-button" onClick={onRequestClose}>X</button>
         <div className="profile-form-container">
-          <h2>Welcome to Laksh's Shop</h2>
-          <p>Sign into your account</p>
           {loading && <p>Loading...</p>}
           {error && <p>Error: {error}</p>}
           {!loading && !profileData && (
@@ -114,9 +116,8 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
           )}
           {profileData && (
             <div>
-              <h2>{profileData.name.firstname} {profileData.name.lastname}</h2>
-              <p>Email: {profileData.email}</p>
-              <p>Username: {profileData.username}</p>
+              <h2>{profileData.username}</h2>
+              <button onClick={handleLogout} className="profile-form-button">Logout</button>
             </div>
           )}
         </div>
