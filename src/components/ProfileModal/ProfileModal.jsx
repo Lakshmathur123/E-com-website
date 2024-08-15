@@ -1,47 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
+import ProfileModal from '../ProfileModal/ProfileModal';
+import LoginModal from '../LoginModal/LoginModal';
 
-function checkRememberMe(rememberMe, key, value) {
-  if ( rememberMe) {
-    localStorage.setItem(key, JSON.stringify(value) );
-  } else {
-    sessionStorage.setItem(key, JSON.stringify(value));
-  }
-};
+const Navbar = () => {
+  const [modalType, setModalType] = useState(null); // 'login' or 'profile'
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
-
-const ProfileModal = ({ isOpen, onRequestClose, onLogout }) => {
-  const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState("");
-  const [token, setToken] = useState("");
-  const [userData, setUserData] = useState(null);
-  
-   
   useEffect(() => {
-
-    const storedUsername = localStorage.getItem('username') || sessionStorage.getItem('username');
-    const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token');
-
-   if (storedUsername && storedToken) {
-    setUsername(storedUsername);
-    fetchUserdata(storedUsername, storedToken);
-   }
+    // Check if the user is logged in based on token existence
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    setIsLoggedIn(!!token);
+    console.log("Token exists:", !!token); // Debug: Log if token exists
   }, []);
 
-  const fetchUserdata = async (username, token) => {
-    setLoading(true);
-    try {
-      const response =await fetch('https://fakestoreapi.com/users/1');
-      const data  = await response.json(); 
-      if (data && data.username === username) {
-        setUserData(data);
-      }
-    } catch (error) {
-      console.log('error', error);
-    } finally {
-      setLoading (false);
+  const openModal = () => {
+    if (isLoggedIn) {
+      setModalType('profile');
+    } else {
+      setModalType('login');
     }
+    console.log("Modal type set to:", isLoggedIn ? 'profile' : 'login'); // Debug: Log the modal type
+  };
+
+  const closeModal = () => {
+    setModalType(null);
+  };
+
+  const handleLogin = () => {
+    // Simulate login logic here
+    setIsLoggedIn(true);
+    setModalType('profile'); // Switch to profile modal after login
+    console.log("User logged in, switching to profile modal"); // Debug: Log login success
   };
 
   const handleLogout = () => {
@@ -49,41 +41,61 @@ const ProfileModal = ({ isOpen, onRequestClose, onLogout }) => {
     localStorage.removeItem('token');
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('token');
-    setUserData(null);
-    setUsername('');
-    onLogout();
+    setIsLoggedIn(false);
+    closeModal();
   };
 
-  if (!isOpen || !userData) return null;
-
-
- 
-
-
-
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Profile Modal"
-      className="profile-modal"
-      overlayClassName="profile-overlay"
-    >
-      <div className="profile-modal-content">
-        <button className="profile-close-button" onClick={onRequestClose}>X</button>
-        <div className="profile-form-container">
-        {loading ? <p>Loading...</p> : (
-          <>
-          <h2>Welcome, {userData.username}</h2>
-          <button className="logout-button" onClick={onLogout}>Logout</button>
-
-          </>
-       )}
-           </div>
+    <div>
+      <nav className="navbar">
+        <div className="logo-container">
+          <Link to="/">
+            <img src="./logo-laksh.png" alt="logo" className="logo-image" />
+          </Link>
+          <Link to="/" className="logo-text">
+            Laksh's Shop
+          </Link>
+        </div>
+        <div className="search-bar-container">
+          <input type="text" placeholder="Search Any Product" className="search-bar" />
+          <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        </div>
+        <div className="profile-cart">
+          <button onClick={openModal} className="profile-button">
+            <FontAwesomeIcon icon={faUser} className="icon" />
+          </button>
+          <Link to="/cart" className="cart-button">
+            <FontAwesomeIcon icon={faShoppingCart} className="icon" />
+          </Link>
+        </div>
+      </nav>
+      <div className="nav-container">
+        <ul className="nav-links">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/categories">Categories</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
+          <li><Link to="/about">About Us</Link></li>
+        </ul>
+       
+        {/* Conditionally render modals */}
+        {modalType === 'login' && (
+          <LoginModal
+            isOpen={true}
+            onRequestClose={closeModal}
+            onLogin={handleLogin}
+          />
+        )}
+        
+        {modalType === 'profile' && isLoggedIn && (
+          <ProfileModal
+            isOpen={true}
+            onRequestClose={closeModal}
+            onLogout={handleLogout}
+          />
+        )}
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default ProfileModal;
-
+export default Navbar;
