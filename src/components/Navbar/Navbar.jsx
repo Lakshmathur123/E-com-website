@@ -86,7 +86,13 @@ const Navbar = () => {
           />
         )}
         
-       
+        {modalType === 'profile' && isLoggedIn && (
+          <ProfileModal
+            isOpen={true}
+            onRequestClose={closeModal}
+            onLogout={handleLogout}
+          />
+        )}
       </div>
     </div>
   );
