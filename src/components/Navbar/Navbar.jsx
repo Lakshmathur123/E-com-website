@@ -1,19 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
 import ProfileModal from '../ProfileModal/ProfileModal';
+import LoginModal from '../LoginModal/LoginModal';
 
 const Navbar = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token') || !!sessionStorage.getItem('token'));
+  const [modalType, setModalType] = useState(null); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+   
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    setIsLoggedIn(!!token);
+    console.log("Token exists:", !!token); 
+  }, []);
 
   const openModal = () => {
-    setModalIsOpen(true);
+    if (isLoggedIn) {
+      setModalType('profile');
+    } else {
+      setModalType('login');
+    }
+    console.log("Modal type set to:", isLoggedIn ? 'profile' : 'login');
   };
 
   const closeModal = () => {
-    setModalIsOpen(false);
+    setModalType(null);
+  };
+
+  const handleLogin = () => {
+    // Simulate login logic here
+    setIsLoggedIn(true);
+    setModalType('profile'); // Switch to profile modal after login
+    console.log("User logged in, switching to profile modal"); // Debug: Log login success
   };
 
   const handleLogout = () => {
@@ -49,18 +69,30 @@ const Navbar = () => {
           </Link>
         </div>
       </nav>
-      <div className='nav-container'>
+      <div className="nav-container">
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
           <li><Link to="/categories">Categories</Link></li>
           <li><Link to="/contact">Contact Us</Link></li>
           <li><Link to="/about">About Us</Link></li>
         </ul>
-        <ProfileModal 
-          isOpen={modalIsOpen && isLoggedIn} 
-          onRequestClose={closeModal} 
-          onLogout={handleLogout} 
-        />
+       
+        {/* Conditionally render modals */}
+        {modalType === 'login' && (
+          <LoginModal
+            isOpen={true}
+            onRequestClose={closeModal}
+            onLogin={handleLogin}
+          />
+        )}
+        
+        {modalType === 'profile' && isLoggedIn && (
+          <ProfileModal
+            isOpen={true}
+            onRequestClose={closeModal}
+            onLogout={handleLogout}
+          />
+        )}
       </div>
     </div>
   );
