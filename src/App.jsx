@@ -22,6 +22,7 @@ export default function App() {
         <Route path="/categories" element={<Categories />} />
         <Route path="/category/:categoryName" element={<CategoryItems />} />
         <Route path='/about' element={<AboutUs />} />
+      
       </Routes>
     </Router>
   );

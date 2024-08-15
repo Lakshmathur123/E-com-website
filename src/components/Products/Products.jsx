@@ -1,4 +1,3 @@
-// components/Products.js
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../ProductCart/ProductCart';
 
@@ -22,10 +21,7 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = (product) => {
-    // Add your add to cart logic here
-    console.log(`Added product ${product.title} to cart.`);
-  };
+
 
   if (loading) {
     return <p>Loading products...</p>;
@@ -37,7 +33,6 @@ const Products = () => {
         <ProductCard 
           key={product.id} 
           product={product}
-          onAddToCart={handleAddToCart}
         />
       ))}
     </section>

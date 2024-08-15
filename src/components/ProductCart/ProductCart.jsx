@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ProductCard = ({ product, onAddToCart }) => {
+const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -11,7 +11,6 @@ const ProductCard = ({ product, onAddToCart }) => {
 
   const handleAddToCartClick = (event) => {
     event.stopPropagation();
-    onAddToCart(product);
   };
 
   return (
