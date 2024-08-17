@@ -2,47 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
-import ProfileModal from '../ProfileModal/ProfileModal';
 import LoginModal from '../LoginModal/LoginModal';
+import ProfileModal from '../ProfileModal/ProfileModal';
 
 const Navbar = () => {
-  const [modalType, setModalType] = useState(null); 
+  const [modalType, setModalType] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginState, setLoginState] = useState(false);
 
   useEffect(() => {
-   
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     setIsLoggedIn(!!token);
-    console.log("Token exists:", !!token); 
   }, []);
 
   const openModal = () => {
-    if (isLoggedIn) {
-      setModalType('profile');
-    } else {
-      setModalType('login');
-    }
-    console.log("Modal type set to:", isLoggedIn ? 'profile' : 'login');
+    setLoginState(true);
   };
 
   const closeModal = () => {
-    setModalType(null);
+    setLoginState(false);
+    setModalType(null); // Reset modal type when closed
   };
 
-  const handleLogin = () => {
-    // Simulate login logic here
-    setIsLoggedIn(true);
-    setModalType('profile'); // Switch to profile modal after login
-    console.log("User logged in, switching to profile modal"); // Debug: Log login success
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('token');
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('token');
-    setIsLoggedIn(false);
-    closeModal();
+  const checkedLogin = () => {
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+      setModalType('profile');
+    } else {
+      setIsLoggedIn(false);
+      setModalType('login');
+    }
+    openModal(); 
   };
 
   return (
@@ -61,7 +52,7 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faSearch} className="search-icon" />
         </div>
         <div className="profile-cart">
-          <button onClick={openModal} className="profile-button">
+          <button onClick={checkedLogin} className="profile-button">
             <FontAwesomeIcon icon={faUser} className="icon" />
           </button>
           <Link to="/cart" className="cart-button">
@@ -76,22 +67,18 @@ const Navbar = () => {
           <li><Link to="/contact">Contact Us</Link></li>
           <li><Link to="/about">About Us</Link></li>
         </ul>
-       
-        {/* Conditionally render modals */}
+
         {modalType === 'login' && (
           <LoginModal
-            isOpen={true}
+            isOpen={loginState}
             onRequestClose={closeModal}
-            onLogin={handleLogin}
           />
         )}
-        
-        {modalType === 'profile' && isLoggedIn && (
+       {modalType === 'profile' && isLoggedIn && (
           <ProfileModal
-            isOpen={true}
+            isOpen={loginState}
             onRequestClose={closeModal}
-            onLogout={handleLogout}
-          />
+            />
         )}
       </div>
     </div>
